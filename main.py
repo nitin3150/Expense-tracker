@@ -1,32 +1,21 @@
-import csv
+from db.database import SessionLocal
+from db.models import User, Expense
 
-def newEntry():
-    with open('records.xlsx','w') as file:
-        entry = csv.writer(file,delimiter=',')
-        date = input("Enter Date(DD/MM/YYYY): ")
-        amount = int(input("Enter amount: "))
-        Category = input("Category(E for Expenditure and I for income): ")
-        description = input("Description(optional): ")
-        line = ','.join(date,amount,Category,description)
-        entry.writerow(line)
+db = SessionLocal()
 
-def viewEntry():
-    with open('records.csv','r') as file:
-        entries = csv.reader(file)
+# Add a user
+new_user = User(name="Nitin",email="nitingoyal6742@gmail.com")
+db.add(new_user)
+db.commit()
 
-        for entry in entries:
-            print(entry)
+# Add an expense
+expense = Expense(amount=99.99, description="Dinner", payer_id=new_user.id)
+db.add(expense)
+db.commit()
 
-def main():
-    print('''1: Add New entry\n2: View Entries\n3: Exit''')
-    select = int(input("Choose an option: "))
-    match select:
-        case 1:
-            newEntry()
-        case 2:
-            viewEntry()
-        case _:
-            exit()
+# Query expenses
+expenses = db.query(Expense).filter(Expense.user_id == new_user.id).all()
+for exp in expenses:
+    print(exp.description, exp.amount)
 
-if __name__ == "__main__":
-    main()
+db.close()
