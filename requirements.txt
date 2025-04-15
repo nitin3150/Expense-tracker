@@ -1,2 +1,6 @@
 sqlalchemy
 fastapi
+pydantic
+uvicorn
+email-validator
+jinja2

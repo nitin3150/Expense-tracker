@@ -1,9 +1,14 @@
-from services import create_user, create_group, expense, settlement
-from fastapi import FastAPI
+from fastapi import FastAPI,Request,Form
+from routes import user
+from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.templating import Jinja2Templates
 
-app = FastAPI()
+app = FastAPI(title="Expense Tracker")
+templates = Jinja2Templates(directory="templates")
 
+# Show the form
+@app.get("/", response_class=HTMLResponse)
+def get_user_form(request: Request):
+    return templates.TemplateResponse("user_create.html", {"request": request})
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
+app.include_router(user.router, prefix="/users", tags=["Users"])

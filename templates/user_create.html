@@ -1,0 +1,19 @@
+<!-- templates/create_user.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create User</title>
+</head>
+<body>
+    <h2>Create User</h2>
+    <form action="/create-user" method="post">
+        <label>Name:</label><br>
+        <input type="text" name="name" required><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="email" required><br><br>
+
+        <input type="submit" value="Create User">
+    </form>
+</body>
+</html>
