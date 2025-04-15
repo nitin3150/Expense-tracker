@@ -11,4 +11,4 @@ templates = Jinja2Templates(directory="templates")
 def get_user_form(request: Request):
     return templates.TemplateResponse("user_create.html", {"request": request})
 
-app.include_router(user.router, prefix="/users", tags=["Users"])
+app.include_router(user.router)
