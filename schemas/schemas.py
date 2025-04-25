@@ -6,3 +6,7 @@ class UserCreate(BaseModel):
 
 class GroupCreate(BaseModel):
     name : str
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str

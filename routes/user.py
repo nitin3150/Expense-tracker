@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends,Form
-from schemas.schemas import UserCreate
+from schemas.schemas import UserCreate,UserLogin
 from sqlalchemy.orm import Session
 from db.database import get_db
 from services.create_user import create_user
+from services.user_login import user_login
 
 router = APIRouter()
 
@@ -14,3 +15,7 @@ async def add_user(
 ):
     user = UserCreate(name=name, email=email)
     return create_user(user, db)
+
+@router.get("/login")
+async def get_user(user:UserLogin, db:Session = Depends(get_db)):
+    return user_login(user,db)
